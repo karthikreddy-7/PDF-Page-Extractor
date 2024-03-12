@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import Alert from "./Alert";
 
-const Feature = () => {
+const Feature = ({ setPdfUploaded }) => {
+  const [alertMessage, setAlertMessage] = useState(""); // State to hold the alert message
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const extension = file.name.split(".").pop().toLowerCase();
       if (extension !== "pdf") {
-        alert("Only PDF files are allowed.");
+        setAlertMessage("Only PDF files are allowed."); // Set the alert message
         event.target.value = "";
+
+        // Clear the alert message after 10 seconds
+        setTimeout(() => {
+          setAlertMessage("");
+        }, 4000);
+      } else {
+        setPdfUploaded(true);
       }
     }
   };
@@ -31,6 +41,9 @@ const Feature = () => {
         </label>
         <br />
         <p className="text-xs">or drop PDF here</p>
+        <br />
+        <br />
+        {alertMessage && <Alert message={alertMessage} />}
       </div>
     </>
   );

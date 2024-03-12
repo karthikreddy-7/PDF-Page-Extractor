@@ -4,8 +4,10 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import Feature from "./components/Feature";
+import Displaypdf from "./components/Displaypdf";
 function App() {
   const [showFeature, setShowFeature] = useState(false);
+  const [pdfUploaded, setPdfUploaded] = useState(false);
   return (
     <>
       <div className="m-4 bg-black">
@@ -13,8 +15,10 @@ function App() {
           <Navbar setShowFeature={setShowFeature} />
           {!showFeature ? (
             <Hero setShowFeature={setShowFeature} />
+          ) : pdfUploaded ? (
+            <Displaypdf />
           ) : (
-            <Feature />
+            <Feature setPdfUploaded={setPdfUploaded} />
           )}
           <Footer />
         </div>
