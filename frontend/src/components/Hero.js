@@ -9,8 +9,8 @@ const Hero = () => {
           <div>
             <h1 className="text-5xl font-bold">PDF Extractor</h1>
             <p className="py-6">
-              Split PDF file Separate one page or a whole set for easy
-              conversion into independent PDF files.
+              Extract certain pages from ypur PDF and easily download your new
+              PDF with a single click.
             </p>
             <button className="btn btn-primary">
               Extract your Custom PDF !!
