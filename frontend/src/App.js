@@ -5,9 +5,12 @@ import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import Feature from "./components/Feature";
 import Displaypdf from "./components/Displaypdf";
+import { pdfjs } from "react-pdf";
+
 function App() {
   const [showFeature, setShowFeature] = useState(false);
   const [pdfUploaded, setPdfUploaded] = useState(false);
+  const [pdf, setPdf] = useState(null);
   return (
     <>
       <div className="m-4 bg-black">
@@ -16,9 +19,9 @@ function App() {
           {!showFeature ? (
             <Hero setShowFeature={setShowFeature} />
           ) : pdfUploaded ? (
-            <Displaypdf />
+            <Displaypdf pdfFile={pdf} />
           ) : (
-            <Feature setPdfUploaded={setPdfUploaded} />
+            <Feature setPdfUploaded={setPdfUploaded} setPdf={setPdf} />
           )}
           <Footer />
         </div>

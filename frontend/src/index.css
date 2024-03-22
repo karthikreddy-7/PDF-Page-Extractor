@@ -5,3 +5,8 @@
 body {
   @apply bg-black;
 }
+.react-pdf__Document {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem; /* Adjust the gap as needed */
+}

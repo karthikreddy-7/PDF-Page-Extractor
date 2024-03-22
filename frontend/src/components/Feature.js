@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Alert from "./Alert";
 
-const Feature = ({ setPdfUploaded }) => {
+const Feature = ({ setPdfUploaded, setPdf }) => {
   const [alertMessage, setAlertMessage] = useState(""); // State to hold the alert message
 
   const handleFileChange = (event) => {
@@ -11,12 +11,11 @@ const Feature = ({ setPdfUploaded }) => {
       if (extension !== "pdf") {
         setAlertMessage("Only PDF files are allowed."); // Set the alert message
         event.target.value = "";
-
-        // Clear the alert message after 10 seconds
         setTimeout(() => {
           setAlertMessage("");
         }, 4000);
       } else {
+        setPdf(file); // Set the PDF file
         setPdfUploaded(true);
       }
     }
