@@ -11,11 +11,11 @@ const Hero = ({ setShowFeature }) => {
             <p className="py-6 text-xl text-white ">
               Extract certain pages from ypur PDF
             </p>
-            <p className="text-xl text-white ">
+            <p className="text-xl text-white mb-3 ">
               and easily download your new PDF with a single click.
             </p>
             <button
-              className="btn btn-primary"
+              className="btn m-3 p-2 btn-primary text-white"
               onClick={() => setShowFeature(true)}
             >
               Extract your Custom PDF !!

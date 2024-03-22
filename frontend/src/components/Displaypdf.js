@@ -4,10 +4,11 @@ import { Document, Page, pdfjs } from "react-pdf";
 // Configure PDF.js worker path
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const DisplayPDF = ({ pdfFile }) => {
+const DisplayPDF = ({ pdfFile, setPdfUploaded, setShowFeature }) => {
   const [numPages, setNumPages] = useState(null);
   const [selectedPages, setSelectedPages] = useState({});
   const [response, setResponse] = useState(false);
+  const [newPdf, setNewPdf] = useState(null);
 
   useEffect(() => {
     const initialSelectedPages = {};
@@ -70,6 +71,43 @@ const DisplayPDF = ({ pdfFile }) => {
     }
   };
 
+  const extractPagesbyfrontend = async () => {
+    const selectedPageNumbers = Object.entries(selectedPages)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([pageNumber]) => parseInt(pageNumber));
+
+    // Convert pdfFile to a URL
+    const pdfUrl = URL.createObjectURL(pdfFile);
+
+    const loadingTask = pdfjs.getDocument(pdfUrl);
+    loadingTask.promise.then((pdf) => {
+      const newPdfPages = [];
+      selectedPageNumbers.forEach((pageNumber) => {
+        pdf.getPage(pageNumber).then((page) => {
+          newPdfPages.push(page);
+          if (newPdfPages.length === selectedPageNumbers.length) {
+            // Construct a new PDF using selected pages
+            const newPdf = new Blob(newPdfPages, { type: "application/pdf" });
+            // Create download link
+            const url = window.URL.createObjectURL(newPdf);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "modified_pdf.pdf";
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            console.log("New PDF created and downloaded successfully!");
+          }
+        });
+      });
+    });
+  };
+
+  const goBack = () => {
+    setShowFeature(true);
+    setPdfUploaded(false);
+  };
+
   return (
     <>
       {!response ? (
@@ -100,8 +138,14 @@ const DisplayPDF = ({ pdfFile }) => {
               ))}
             </Document>
           </div>
-          <div className="flex justify-center items-center">
-            <button className="btn btn-wide text-white" onClick={extractPages}>
+          <div className="flex justify-center gap-4 items-center">
+            <button className="btn bg-red-800 text-white" onClick={goBack}>
+              Go Back{" "}
+            </button>
+            <button
+              className="btn  text-white bg-green-800"
+              onClick={extractPagesbyfrontend}
+            >
               Extract Pages{" "}
             </button>
           </div>

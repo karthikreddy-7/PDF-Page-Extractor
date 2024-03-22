@@ -19,7 +19,11 @@ function App() {
           {!showFeature ? (
             <Hero setShowFeature={setShowFeature} />
           ) : pdfUploaded ? (
-            <Displaypdf pdfFile={pdf} />
+            <Displaypdf
+              pdfFile={pdf}
+              setPdfUploaded={setPdfUploaded}
+              setShowFeature={setShowFeature}
+            />
           ) : (
             <Feature setPdfUploaded={setPdfUploaded} setPdf={setPdf} />
           )}
